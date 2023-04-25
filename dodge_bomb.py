@@ -3,6 +3,8 @@ import pygame as pg
 
 import sys
 
+
+
 # 練習４
 delta = {
     pg.K_UP: (0, -1),
@@ -32,6 +34,8 @@ def main():
     clock = pg.time.Clock()
     bg_img = pg.image.load("ex02/fig/pg_bg.jpg")
     kk_img = pg.image.load("ex02/fig/3.png")
+    
+
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
     kk_rct = kk_img.get_rect() # 練習４
     kk_rct.center = 900, 400 # 練習４
@@ -44,6 +48,18 @@ def main():
     bb_rct = bb_img.get_rect() # 練習３
     bb_rct.center = x, y # 練習３
     tmr = 0
+    ending = 0
+
+    kokaton = {
+        (0, -1): pg.transform.rotozoom(kk_img, -90, 1.0),
+        (+1, -1): pg.transform.rotozoom(kk_img, -135, 1.0),
+        (+1, 0): pg.transform.rotozoom(kk_img, -180, 1.0),
+        (+1, +1): pg.transform.rotozoom(kk_img, -225, 1.0),
+        (0, +1): pg.transform.rotozoom(kk_img, -270, 1.0),
+        (-1, +1): pg.transform.rotozoom(kk_img, -305, 1.0),
+        (-1, 0): pg.transform.rotozoom(kk_img, -0, 1.0),
+        (-1, -1): pg.transform.rotozoom(kk_img, -45, 1.0),
+        }
 
     while True:
         for event in pg.event.get():
@@ -57,6 +73,8 @@ def main():
         for k, mv in delta.items():
             if key_lst[k]:
                 kk_rct.move_ip(mv)
+                kk_img = kokaton[mv]
+
         if check_bound(screen.get_rect(),kk_rct) != (True, True):
             for k, mv in delta.items():
                 if key_lst[k]:
@@ -71,8 +89,12 @@ def main():
         if not tate: # 縦方向にはみ出ていたら
             vy *= -1
         screen.blit(bb_img, bb_rct) # 練習３
-        if kk_rct.colliderect(bb_rct):
+
+        
+        if kk_rct.colliderect(bb_rct): 
             return
+
+
 
         pg.display.update()
         clock.tick(1000)
