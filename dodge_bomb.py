@@ -45,7 +45,6 @@ def main():
     bb_rct = bb_img.get_rect() # 練習３
     bb_rct.center = x, y # 練習３
     tmr = 0
-    ending = 0
 
     kokaton = {
         (0, -1): pg.transform.rotozoom(kk_img, -90, 1.0),
@@ -71,7 +70,6 @@ def main():
             if key_lst[k]:
                 kk_rct.move_ip(mv)
                 kk_img = kokaton[mv]
-
         if check_bound(screen.get_rect(),kk_rct) != (True, True):
             for k, mv in delta.items():
                 if key_lst[k]:
@@ -93,8 +91,37 @@ def main():
         pg.display.update()
         clock.tick(1000)
 
-if __name__ == "__main__":
+def start():
+    """
+    スタート時にこうかとんが踊ってる
+    """
+    pg.display.set_caption("逃げろ！こうかとん")
+    clock = pg.time.Clock()
+    screen = pg.display.set_mode((1600, 900))
+    bg_img = pg.image.load("ex02/fig/pg_bg.jpg")
+    kk_img = pg.image.load("ex02/fig/9.png")
+    kk_img = pg.transform.rotozoom(kk_img, -10, 5.0)
+    kk10_img = pg.transform.rotozoom(kk_img, 10, 1.0)
+    kk_imgs = [kk_img,kk10_img]
+    tmr = 0
+
+    while True:
+        tmr += 1
+        if tmr%100 <= 50:
+            a = 1
+        else:
+            a = 0
+        screen.blit(bg_img, [0, 0])
+        screen.blit(kk_imgs[a], [650 ,300])
+        if tmr == 500:
+            return 0
+        
+        pg.display.update()
+        clock.tick(1000)
+
+if __name__ == "__main__": 
     pg.init()
+    start()
     main()
     pg.quit()
     sys.exit()
