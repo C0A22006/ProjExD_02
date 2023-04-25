@@ -3,8 +3,6 @@ import pygame as pg
 
 import sys
 
-
-
 # 練習４
 delta = {
     pg.K_UP: (0, -1),
@@ -35,7 +33,6 @@ def main():
     bg_img = pg.image.load("ex02/fig/pg_bg.jpg")
     kk_img = pg.image.load("ex02/fig/3.png")
     
-
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
     kk_rct = kk_img.get_rect() # 練習４
     kk_rct.center = 900, 400 # 練習４
@@ -89,16 +86,12 @@ def main():
         if not tate: # 縦方向にはみ出ていたら
             vy *= -1
         screen.blit(bb_img, bb_rct) # 練習３
-
         
         if kk_rct.colliderect(bb_rct): 
             return
 
-
-
         pg.display.update()
         clock.tick(1000)
-
 
 if __name__ == "__main__":
     pg.init()
